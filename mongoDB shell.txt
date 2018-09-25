@@ -1,0 +1,45 @@
+use students
+show collections
+db.students.find()
+/*插入文档*/
+db.students.insert({id:2,name:"孙悟空"});
+db.students.find();
+db.students.insert([
+  {name:"语文"},
+  {name:"数学"},
+  {name:"英语"}
+  ]);
+  db.students.find();
+  /*查询*/
+  db.students.find({name:"Jack"})
+  db.students.find({id:2,name:"孙悟空"});
+  db.students.find().count();
+  db.students.find().length();
+  /*update*/
+  db.students.find();
+  db.students.update({name:"Jack"},{age:20});
+  db.students.insertOne({name:"黎明",age:20});
+  db.students.update({name:"黎明"},{$set:{age:24}});
+  db.students.update({name:"语文"},{$set:{age:2}});
+  db.students.update({name:"语文"},{$unset:{age:2}});
+  db.students.remove({age:20});
+  db.students.deleteOne({name:"孙悟空"});
+  db.students.remove({name:"语文"},true);
+  db.students.remove({});//删除所有文档，清空集合
+  db.students.drop();//删除一个集合，需要清空集合建议使用这种方式
+  db.dropDatabase();//删除数据库
+  db.students.find();
+当文档的属性值也是一个文档时，我们称其为“内嵌文档”
+查询内嵌文档
+db.users.find({"hobby.movies":"hero"});
+添加一个内嵌文档,$push用于向数组中添加一个新的元素  或者是 $addToSet
+$push不会考虑重复的问题，如果数组中已有了这条文档，再往里面添加时，$addToSet会考虑重复问题，不会再往里面添加
+db.users.update({name:"tangseng"},{$push:{"hobby.movies":"Interstellar"}});
+db.users.find().limit(10);//查询前10条数据
+db.users.find().skip(10).limit(10);//  查看11-20条数据
+
+
+文档间的关系
+一对一
+一对多   多对一
+多对多
